@@ -1,0 +1,19 @@
+.footer-column{
+	box-sizing: content-box;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px;
+}
+
+.footer-info{
+	min-width: 200px;
+}
+
+.footer-nav-bar{
+	list-style: none;
+}
+
+.footer-nav-bar .menu-item a{
+	color: black;
+}

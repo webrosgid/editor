@@ -1,0 +1,21 @@
+.main-navigation{
+	padding: 15px;
+}
+
+.main-navigation ul {
+
+	list-style: none;
+	margin: 0;
+	padding-left: 0;
+	display: block;
+	text-align: center;
+}
+
+.main-navigation ul li
+{
+	position: relative;
+	display: inline-block;
+	text-align: left;
+	margin-left: 5.36em;
+}
+

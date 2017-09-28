@@ -1,0 +1,219 @@
+/*Содержит стили для режима редактирования*/
+
+
+.el{
+	border: 2px solid transparent;
+}
+
+/*Рамка (появляется при наведении на элемент)*/
+.setting-frame{
+	z-index: 3;
+	background-color: #65A5D1;
+	width: auto;
+	position: absolute;
+	padding: 5px;
+	text-align: center;
+}
+.setting-frame i{
+	font-size: 25px;
+	padding: 0 5px;
+}
+.setting-frame i:hover{
+	cursor: pointer;
+}
+/************************************************************/
+
+/*Элумент скрыть показать главную панель инструментов*/
+.visible-header-lp{
+	position: fixed;
+	top:0;
+	right: 0;
+	width: 53px;
+	height: 50px;
+	z-index: 9999;
+	background: rgba(0,0,0,0.3);
+	text-align: center;
+	/*color: white;*/
+}
+
+.visible-header-lp i{
+	font-size: 40px;
+	padding: 4px;
+}
+
+.visible-header-lp i:hover{
+	cursor: pointer;
+}
+/*********************************************/
+
+/*Боковая панель настроек*/
+.setting-panel{
+	position: fixed;
+	/*height: 100%;*/
+	width: 40%;
+	top: 100px;
+	right: 0;
+	background-color: white;
+	z-index: 10;
+	padding: 20px;
+	box-shadow: 0 0 40px rgba(0,0,0,0.7);
+	overflow: auto;
+	bottom: 10px;
+}
+
+.btn-setting-group{
+	text-align: left;
+	margin-bottom: 20px;
+}
+
+.btn-setting-group i{
+	font-size: 40px;
+	margin: 0 10px;
+}
+
+.btn-setting-group i:hover{
+	cursor: pointer;
+}
+
+.btn-setting-group .btn-save{
+	color: green;
+}
+
+.btn-setting-group .btn-close{
+	color: red;
+}
+
+.form-setting{
+	text-align: center;
+}
+
+.title-setting{
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+
+.head-setting{
+	font-size: 18px;
+	text-align: left;
+	padding: 10px;
+}
+
+.settings-content{
+	text-align: center;
+	margin-top: 20px;
+}
+
+.settings-box{
+	margin-top: 20px;
+}
+/*******************************************/
+
+/*Панель выбора фона*/
+.select-color{
+	text-align: -webkit-center;
+}
+
+.back-img{
+	width: 150px;
+	height: 150px;
+	margin: 10px;
+}
+
+.back-img:hover{
+	cursor: pointer;
+	border: 1px solid #00ff00;
+}
+
+.images-default{
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.del-back-img{
+	position: absolute;
+	right: 10px;
+	top: 5px;
+	color: white;
+	font-size: 35px;
+}
+
+.del-back-img:hover{
+	cursor: pointer;
+}
+/******************************************/
+
+
+/*Выбор видов элемента*/
+.view-type img{
+	width: 80%;
+	padding: 10px;
+	border: 2px solid transparent;
+}
+
+.view-type img:hover{
+	border: 2px solid #46e317;
+}
+/*************************/
+
+
+
+/*стили для перетаскиваемых элементов*/
+.move-item{
+	border: 1px solid transparent;
+}
+
+.move-element{
+	cursor: move;
+	border: 1px solid grey;
+}
+
+.move-list{
+	position: relative;
+}
+/****************************************/
+
+/*стили модального окна добавления элементов*/
+.modal-title{
+	text-align: center;
+	font-size: 30px;
+}
+
+.check-title{
+	font-size: 17px;
+	padding: 15px;
+}
+
+.type-blocks{
+	padding: 0 15px;
+}
+
+.type-blocks p input{
+	transform: scale(1.7);
+}
+
+.type-blocks p span{
+	padding-left: 10px;
+	font-size: 20px;
+}
+/********************************************/
+
+/*Кнопки блоков внизу страницы*/
+.blocks-btn{
+	padding: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(229,227,227,1) 47%,rgba(209,209,209,1) 100%);
+}
+
+.blocks-btn button{
+	font-size: 25px;
+	border: 1px solid gray;
+}
+
+.blocks-btn-header{
+	padding: 0 15px;
+	font-size: 25px;
+}
+/*****************************/

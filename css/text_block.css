@@ -1,0 +1,16 @@
+.text-block{
+	padding: 0 5px;
+}
+
+.text-block .text-header{
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+	padding: 5px 0;
+
+}
+
+.text-desc p {
+	text-indent: 30px;
+	text-align: justify;
+}
