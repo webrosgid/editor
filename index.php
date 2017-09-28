@@ -104,6 +104,9 @@
 				<div class="control">
 					<button id="addBlockBtn" onclick="showModal('#addBlockModal')" class="btn">Добавить блок</button>
 					<button onclick="uploadContextSetting('lp_background');" class="btn">Фон страницы</button>
+					<button class="btn">Личный кабинет</button>
+					<button class="btn">Изменить домен</button>
+					<button class="btn">Помощь</button>
 					<button id="saveBtn" class="btn"><img src="/editor/images/save-ico.png" alt="Сохранить">Сохранить</button>
 				</div>
 

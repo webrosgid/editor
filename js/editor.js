@@ -92,7 +92,7 @@ $(document).ready(function() {
 	/********************************************/
 
 	/*Редактирование текста на странице*/
-	$('div [contenteditable]').dblclick(function() {
+	page.on('dblclick', 'div [contenteditable]', function() {
 		var id = $(this).attr("id");
 		if ( id === undefined || id === false) {
 			id = str_rand();
@@ -107,12 +107,8 @@ $(document).ready(function() {
 		{
 			CKEDITOR.inline(id);
 		}
-
-		//CKEDITOR.disableAutoInline = true;
-
 	});
 	/***************************************************/
-
 });
 
 
@@ -134,13 +130,9 @@ function startSetting(block) {
 	data += "&context=" + type;
 	data += "&id=" + id;
 
-	if(type == 'slider'){
-		var imgs = [];
-		$('#'+id).find('.sl_img').each(function() {
-			imgs.push($(this).attr('src'));
-		});
-
-		data += "&sl_imgs=" + JSON.stringify(imgs);
+	if(type === 'slider'){
+		var sliders = getSliders(id);
+		data += "&sliders=" + sliders;
 	}
 
 	uploadContextSetting(data);
@@ -148,7 +140,7 @@ function startSetting(block) {
 
 //Отправка контекста для отображения соответствующих настроек
 function uploadContextSetting(data){
-	if(data == 'lp_background'){
+	if(data === 'lp_background'){
 		data = "&context=" + 'lp_background';
 	}
 	$.post('/editor/ajax/context.php', data, function(data) {
@@ -220,10 +212,9 @@ function generateFormFromSettingBackground(value, idBlock) {
 			$('.settings-box').html(
 				"<div>Выбрать один из вариантов</div>" +
 				"<div class='images-default'></div>"+
-				"<div>Загрузите изображение</div>" +
-				"<div><input type='file' class='form-control' accept='image/*' id='backgroundImg' name='backgroundImg' onchange='uploadImgBackground(); return false;'/></div>" +
-				"<div id='backgroundPreview'></div>"
+				"<div class='block-upload'><div>Загрузка изображений для фона</div><div id='uploadBtn' class='btn upload-btn'><span>Выбрать файл<span></div><span id='statusUpload'></span></div>"
 			);
+			uploadImages('background', idBlock);
 
 			break;
 	}
@@ -305,26 +296,26 @@ function setImageBackground(url, idBlock) {
 }
 
 //загрузка изображения для фона страницы
-function uploadImgBackground() {
-	var file = $('#backgroundImg').prop('files')[0];
-	var form_data = new FormData();
-	form_data.append('file', file);
-
-	$.ajax({
-		url: '/editor/ajax/upload.php',
-		dataType: 'text',
-		cache: false,
-		contentType: false,
-		processData: false,
-		data: form_data,
-		type: 'post',
-		success: function(result){
-			console.log(result);
-			$('#backgroundImg').prop('value', null);
-			getImagesBackground();
-		}
-	});
-}
+// function uploadImgBackground(input) {
+// 	var file = input.prop('files')[0];
+// 	var form_data = new FormData();
+// 	form_data.append('file', file);
+//
+// 	$.ajax({
+// 		url: '/editor/ajax/upload.php',
+// 		dataType: 'text',
+// 		cache: false,
+// 		contentType: false,
+// 		processData: false,
+// 		data: form_data,
+// 		type: 'post',
+// 		success: function(result){
+// 			console.log(result);
+// 			input.prop('value', null);
+// 			getImagesBackground();
+// 		}
+// 	});
+// }
 
 //удалить изображение для фона из панели настроек
 function deleteBackgroundImg(item) {
@@ -612,54 +603,11 @@ function addLink(block) {
 }
 
 //Добавление пункта меню в блок меню
-function addLinkMenu(block) {
+function addLinkMenu() {
 
 	var bid=$('#idBlock').val();
 	$('div [type="menu"]').find('ul').append('<li class="menu-item move-item"><a href="#'+bid+'" data="menu">'+$('#textMenu').val()+'</a></li>');
 	hideModal('#addModalMenu');
-}
-
-//включить редактирование на странице
-function EditToPage() {
-	$('div [contenteditable]').each(function()
-	{
-		var id = $(this).attr("id");
-		$(this).attr('contenteditable', 'true');
-
-		if ( id === undefined || id === false) {
-			id = str_rand();
-			$(this).attr('id', id);
-		}
-
-		if($(this).attr('cktype') == 'small'){
-			CKEDITOR.editorConfig = function( config ) {
-				config.toolbarGroups = [
-					{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
-					{ name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
-					{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
-					{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-					{ name: 'forms', groups: [ 'forms' ] },
-					'/',
-					{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
-					{ name: 'links', groups: [ 'links' ] },
-					{ name: 'insert', groups: [ 'insert' ] },
-					'/',
-					{ name: 'styles', groups: [ 'styles' ] },
-					{ name: 'colors', groups: [ 'colors' ] },
-					{ name: 'tools', groups: [ 'tools' ] },
-					{ name: 'others', groups: [ 'others' ] },
-					{ name: 'about', groups: [ 'about' ] }
-				];
-
-				config.removeButtons = 'NewPage,Source,Preview,Print,Save,Find,Replace,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,RemoveFormat,CreateDiv,Language,Anchor,Flash,PageBreak,Iframe,About,Templates,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,SelectAll,Scayt,Subscript,Superscript,NumberedList,BulletedList,Indent,Outdent,Blockquote,BidiLtr,BidiRtl,Image,HorizontalRule,Smiley,SpecialChar,Maximize,ShowBlocks';
-			};
-			//CKEDITOR.disableAutoInline = true;
-			//ckeditors[id] = CKEDITOR.inline(id);
-		}
-
-
-
-	});
 }
 
 //генерирует случайное имя из 5 символов
@@ -672,6 +620,72 @@ function str_rand() {
 		result = result + words.substring(position, position + 1);
 	}
 	return result;
+}
+
+//Получить слайды из слайдера с id
+function getSliders(id) {
+	var sliders = '';
+	var sl = [];
+	var testArr = [];
+	var img = '';
+	var header = '';
+	var text = '';
+
+	$('#'+id).find('.sl-img').each(function()
+	{
+		img =  $(this).attr('src');
+		header = $(this).next('.sl-text').find('.sl-header').html();
+		text = $(this).next('.sl-text').find('.sl-desc').html();
+
+		sl = img +'~' + header + '~' + text;
+
+		if(testArr.indexOf(img) === -1) {
+			sliders += sl + "#";
+			testArr.push(img);
+		}
+	});
+	return sliders;
+}
+
+//загрузка изображений
+function uploadImages(dir, idBlock) {
+	$(function(){
+		var btnUpload=$('#uploadBtn');
+		var status=$('#statusUpload');
+		new AjaxUpload(btnUpload, {
+			action: '/editor/ajax/upload.img.php',
+			name: 'uploadimg',
+			type:'post',
+			data:{dir : dir},
+			onSubmit: function(file, ext)
+			{
+				if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext)))
+				{
+					status.text('Поддерживаемые форматы JPG, PNG или GIF');
+					return false;
+				}
+				status.text('Загрузка...');
+			},
+			onComplete: function(file, response)
+			{
+				status.text('');
+				if(response==="success")
+				{
+					if(dir === 'background'){
+						getImagesBackground(idBlock);
+					}
+
+					$('.block-upload').append('<div class="status-load">Файл загружен!</div>');
+					setTimeout(function() { $(".status-load").remove(); }, 5000);
+				}
+				else
+				{
+					//$('<li></li>').appendTo('#files').text('Файл не загружен' + file).addClass('error');
+				}
+			}
+		});
+
+	});
 }
 
 

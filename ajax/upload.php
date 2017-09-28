@@ -1,5 +1,8 @@
 <?php
+//$dirName = trim($_POST['dirName']) != '' ? trim($_POST['dirName']) : '';
+
 $dir = $_SERVER['DOCUMENT_ROOT'] . '/editor/uploads/background/';
+
 $file_name = substr(md5(microtime() . rand(0, 9999)), 0, 20);
 $file_type =  end(explode(".", $_FILES['file']['name']));
 

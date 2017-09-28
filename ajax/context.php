@@ -4,7 +4,7 @@ $data = array_map('trim', $_POST);
 $result = '';
 $tpl = '';  //хранит шаблон формы настройки
 
-$sl_images = json_decode($data['sl_imgs']);
+$sliders = $data['sliders'];
 
 switch($data['context']){
 	//Формируем форму настройки фона страницы
@@ -98,20 +98,38 @@ switch($data['context']){
 		/*слайды*/
 		$tpl .= "<div class='panel panel-default'>";
 		$tpl .= "<div class='panel-heading'>";
-		$tpl .= "<h4 class='panel-title'><a data-toggle='collapse' data-parent='#accordion' href='#slider_img'>Слайды</a></h4>";
+		$tpl .= "<h4 class='panel-title'><a data-toggle='collapse' data-parent='#accordion' href='#sliders'>Слайды</a></h4>";
 		$tpl .= "</div>";
-		$tpl .= "<div id='slider_img' class='panel-collapse collapse'>";
-		$tpl .= "<div class='panel-body slider-img'>";
+		$tpl .= "<div id='sliders' class='panel-collapse collapse'>";
+		$tpl .= "<div class='panel-body sliders-panel' id_sl = '{$data['id']}'>";
 
-		foreach($sl_images as $src)
+		$sliders = explode('#', $sliders);
+
+		for($i = 0; $i<count($sliders)-1; $i++)
 		{
-			$tpl .= "<div style='position: relative;'>";
-			$tpl .= "<i onclick='deleteBackgroundImg($(this)); return false;' class='fa fa-times del-back-img' aria-hidden='true' title='Удалить'></i>";
-			$tpl .= "<img data='/var/www/ducoll/data/www/lp.rosgid.ru{$src}' class='back-img' src='{$src}'/>";
+			$slide = explode('~', $sliders[$i]);
+			$dr = $_SERVER['DOCUMENT_ROOT'] . $slide[0];
+			$tpl .= "<div class='sliders-panel-slide'>";
+			$tpl .= "<input type='hidden' id='srcMetka' value='{$slide[0]}'>";
+			$tpl .= "<img class='back-img' data = '{$dr}' src='{$slide[0]}'/>";
+			$tpl .= "<div class='sliders-panel-desc'>";
+			$tpl .= "<div class='input-group sett-desc'>";
+			$tpl .= "<span class='input-group-addon'>Заголовок</span>";
+			$tpl .= "<input type='text' class='form-control sl-set-header' value='{$slide[1]}'>";
+			$tpl .= "</div>";
+			$tpl .= "<div class='input-group sett-desc'>";
+			$tpl .= "<span class='input-group-addon'>Описание</span>";
+			$tpl .= "<textarea rows='5' class='form-control sl-set-desc'>{$slide[2]}</textarea>";
+			$tpl .= "</div>";
+			$tpl .= "<button class='btn btn-sm'>Изображение</button>&nbsp";
+			$tpl .= "<button class='btn btn-sm' argument = '{$slide[0]}' id_sl = '{$data['id']}' onclick='deleteSlide($(this));'>Удалить</button>";
+			$tpl .= "</div>";
 			$tpl .= "</div>";
 		}
 
 		$tpl .= "</div>";
+		$tpl .= "<div class='block-upload'><div>Загрузка файлов для галереи</div><div id='uploadBtn' class='btn upload-btn'><span>Выбрать файл<span></div><span id='statusUpload'></span></div>";
+		$tpl .= "<button class='btn btn-sm' onclick='saveSettingSlide();'>Сохранить</button>&nbsp";
 		$tpl .= "</div>";
 		$tpl .= "</div>";
 		/*end слайды*/
@@ -124,6 +142,7 @@ switch($data['context']){
 
 		$tpl .= "</div>";
 		$tpl .= "</div>";
+		$tpl .= "<script>uploadImages('slider');</script>";
 
 		$result = "$('#settingPanel').find('.setting-content').html(\"{$tpl}\");";
 		break;
