@@ -76,3 +76,9 @@
 .sett-desc{
 	margin: 3px;
 }
+
+.images-slider{
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}

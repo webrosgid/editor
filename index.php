@@ -288,7 +288,7 @@ $content_page = $content_page_head . $content_page;
 
 
 <!--Модальное окно "Добавить блок"-->
-<div id="addBlockModal" class="modal fade">
+<div id="addBlockModal" class="modal fade" style="padding-right: 19px;margin-left: -255px;">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -370,6 +370,32 @@ $content_page = $content_page_head . $content_page;
 	</div>
 </div>
 <!-- end Обратный звонок-->
+
+
+<!-- Галерея слайдов-->
+<div id="slideImages" class="modal fade" style="padding-right: 19px;margin-left: -255px;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="cancelAddBlocks();">×</button>
+				<h4 class="modal-title">Галерея изображения для слайда</h4>
+				<div class='block-upload'><div>Загрузка файлов для галереи</div><div id='uploadBtn' class='btn upload-btn'><span>Выбрать файл<span></div><span id='statusUpload'></span></div>
+			</div>
+			<div class="modal-body">
+				<div class="images-slider">
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" onclick="canselSelectImgToSlide();">Отмена</button>
+				<button type="button" class="btn btn-primary" onclick="hideGallery();">Ок</button>
+			</div>
+		</div>
+	</div>
+	<script>uploadImages('slider');</script>
+</div>
+<!-- endГалерея слайдов-->
+
 
 
 </body>

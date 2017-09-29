@@ -182,9 +182,13 @@ function loadPickerButton(idBlock) {
 }
 
 //Получить изображения для фона
-function getImagesBackground(idBlock) {
-	$.post('/editor/ajax/get.images.php', {idBlock : idBlock}, function(data) {
-		$('.images-default').html(data);
+function getImages(dir,idBlock) {
+	$.post('/editor/ajax/get.images.php', {idBlock : idBlock, dir : dir}, function(data) {
+		if(dir === 'slider'){
+			$('.images-slider').html(data);
+		}else {
+			$('.images-default').html(data);
+		}
 	})
 }
 
@@ -208,7 +212,7 @@ function generateFormFromSettingBackground(value, idBlock) {
 
 		case 'type-img':
 			clearSetting('background', idBlock);
-			getImagesBackground(idBlock);
+			getImages('background', idBlock);
 			$('.settings-box').html(
 				"<div>Выбрать один из вариантов</div>" +
 				"<div class='images-default'></div>"+
@@ -318,11 +322,11 @@ function setImageBackground(url, idBlock) {
 // }
 
 //удалить изображение для фона из панели настроек
-function deleteBackgroundImg(item) {
+function deleteImage(item) {
 	var img = item.next('img');
 	var file = img.attr('data');
 	$.post('/editor/ajax/delete.file.php', {file : file}, function() {
-		getImagesBackground();
+		getImages('background');
 	})
 
 }
@@ -672,7 +676,9 @@ function uploadImages(dir, idBlock) {
 				if(response==="success")
 				{
 					if(dir === 'background'){
-						getImagesBackground(idBlock);
+						getImages('background', idBlock);
+					}else if(dir === 'slider'){
+						getImages('slider');
 					}
 
 					$('.block-upload').append('<div class="status-load">Файл загружен!</div>');

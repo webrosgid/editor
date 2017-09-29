@@ -108,10 +108,8 @@ switch($data['context']){
 		for($i = 0; $i<count($sliders)-1; $i++)
 		{
 			$slide = explode('~', $sliders[$i]);
-			$dr = $_SERVER['DOCUMENT_ROOT'] . $slide[0];
-			$tpl .= "<div class='sliders-panel-slide'>";
-			$tpl .= "<input type='hidden' id='srcMetka' value='{$slide[0]}'>";
-			$tpl .= "<img class='back-img' data = '{$dr}' src='{$slide[0]}'/>";
+			$tpl .= "<div class='sliders-panel-slide' number='{$i}'>";
+			$tpl .= "<img class='back-img' onclick='showGallery({$i});' prevsrc='{$slide[0]}' src='{$slide[0]}'/>";
 			$tpl .= "<div class='sliders-panel-desc'>";
 			$tpl .= "<div class='input-group sett-desc'>";
 			$tpl .= "<span class='input-group-addon'>Заголовок</span>";
@@ -121,7 +119,6 @@ switch($data['context']){
 			$tpl .= "<span class='input-group-addon'>Описание</span>";
 			$tpl .= "<textarea rows='5' class='form-control sl-set-desc'>{$slide[2]}</textarea>";
 			$tpl .= "</div>";
-			$tpl .= "<button class='btn btn-sm'>Изображение</button>&nbsp";
 			$tpl .= "<button class='btn btn-sm' argument = '{$slide[0]}' id_sl = '{$data['id']}' onclick='deleteSlide($(this));'>Удалить</button>";
 			$tpl .= "</div>";
 			$tpl .= "</div>";
