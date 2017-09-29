@@ -38,28 +38,7 @@ foreach($jsn as $id)
 
 			if($row_type['name'] == 'map')
 			{
-				$row['html'] .= <<<HTML
-				<script>
-					ymaps.ready(init);
-					function init() {
-						var geocoder = new ymaps.geocode('Санкт-Петербург,Оптиков,4/2', { results: 1 });
-							geocoder.then(function (res) {
-							var coord = res.geoObjects.get(0).geometry.getCoordinates();
-							var map = new ymaps.Map('{$blockId}', {
-								center: coord,
-								zoom: 16,
-								//behaviors: ['default', 'scrollZoom'],
-								controls: ['mapTools']
-							});
-				
-							map.geoObjects.add(res.geoObjects.get(0));
-							map.controls.add('mapTools').add('zoomControl').add('typeSelector');
-							}
-						);
-					}
-				</script>
-HTML;
-
+				$row['html'] .= "<script>init_map('yandex', '{$blockId}')</script>";
 			}
 
 		}

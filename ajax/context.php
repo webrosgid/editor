@@ -216,8 +216,34 @@ switch($data['context']){
 	case 'map':
 		$tpl .= "<div id='formSetting' class='form-setting'>";
 		$tpl .= "<div class='title-setting'>Настройка карты</div>";
-		$tpl .="<div class='settings-box'>";
-		$tpl .="</div>";
+		$tpl .= "<div class='map-coordinate'>";
+
+		$tpl .= "<div class='input-group'>";
+		$tpl .= "<span class='input-group-addon'>Координата X</span>";
+		$tpl .= "<input type='text' class='form-control' name='map_x' value='59.9386300'>";
+		$tpl .= "</div>";
+
+		$tpl .= "<div class='input-group'>";
+		$tpl .= "<span class='input-group-addon'>Координата Y</span>";
+		$tpl .= "<input type='text' class='form-control' name='map_y' value='30.3141300'>";
+		$tpl .= "</div>";
+
+		$tpl .= "<div class='input-group'>";
+		$tpl .= "<span class='input-group-addon'>Масштаб</span>";
+		$tpl .= "<input type='text' class='form-control' name='map_z' value='12'>";
+		$tpl .= "</div>";
+
+		$tpl .= "</div>";
+
+		$tpl .= "<div class='type-map'></div>";
+		$tpl .= "<label class='radio-inline'><input type='radio' name='optradio' value='yandex' onclick='selectMap($(this));'>Яндекс</label>";
+		$tpl .= "<label class='radio-inline'><input type='radio' name='optradio' value='google' onclick='selectMap($(this));'>Google</label>";
+		$tpl .= "<label class='radio-inline'><input type='radio' name='optradio' value='2gis' onclick='selectMap($(this));'>2GIS</label>";
+		$tpl .= "</div>";
+
+		$tpl .="<div class='settings-map' id='set_map'></div>";
+
+		$tpl .= "<script>init_ya();</script>";
 		$tpl .= "</div>";
 
 		$result = "$('#settingPanel').find('.setting-content').html(\"{$tpl}\");";

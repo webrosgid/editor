@@ -109,6 +109,19 @@ $(document).ready(function() {
 		}
 	});
 	/***************************************************/
+
+
+	/*Привязка якоря*/
+	var index = 'page_head';
+	var info = $('div[type=text_block]').attr('id');
+	var contact = $('div[type=callback]').attr('id');
+	var mas = [index, info, contact];
+	var i =0;
+	$('.menu-item').each(function() {
+		$(this).find('a').attr('href', '#'+mas[i]);
+		i++;
+	});
+	/******************/
 });
 
 
@@ -134,7 +147,6 @@ function startSetting(block) {
 		var sliders = getSliders(id);
 		data += "&sliders=" + sliders;
 	}
-
 	uploadContextSetting(data);
 }
 

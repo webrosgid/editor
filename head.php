@@ -46,6 +46,8 @@ $map = <<<HTML
 <div id="head_map">
 	<link rel="stylesheet" type="text/css" href="/editor/css/map.css">
 	<script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhfbhu_M_jvN6pZ6QxzLsZH2N5qUWMBDY"></script>
+	<script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
 	<script src="/editor/js/map.js" type="text/javascript" charset="UTF-8"></script>
 </div>
 HTML;

@@ -115,131 +115,78 @@
 	</div>
 </div>
 
-<!--
-Пока что закомментила, по скольку нужно сделать разделения по блокам-->
-<!--<div class="clearHeader"></div>-->
-<?//// echo htmlspecialchars_decode(stripslashes($stack));?>
 <!--<input type="hidden" name="id" id="template_id" value="--><?php //echo TEMPLATE;?><!--">-->
 <!--<input type="hidden" name="siteurl" id="siteurl" value="--><?php //echo SITEURL;?><!--">-->
-<!--
-<div class="modal hide fade in photos" id="wb_dialog_7" role="dialog" aria-hidden="false">
-	<div class="modal-header">
-		<button data-dismiss="modal" class="close" type="button">×</button>
-		<h3>Изменить изображение</h3>
-	</div>
-	<div class="modal-body">
-		<div class="tabbable">
-			<ul class="nav nav-tabs" style="display: block;">
-				<li class="active">
-					<a data-toggle="tab" href="#wb_tab_pane_0_tab0">Галерея шаблонов</a>
-				</li>
-			</ul>
-		<div class="tab-content" style="height: 300px; overflow-y: auto; opacity: 1;">
-		<div class="tab-pane active" id="wb_tab_pane_0_tab0">
-		<div style="position: relative;">
-		<table style="width:100%;">
-			<tbody>
-				<tr>
-					<td class="wb_menu_fields">
-						<div class="form-inline clearfix wb_tab_head1">
-							<label style="line-height:30px">Выбрать изображение ниже или</label>
-							<button style="margin-left: 10px; position: relative; z-index: 0;" class="btn btn-info" id="upload">Загрузить новую фотографию</button>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-					<div id="files" >
-					<?php
-						/*$dir = ROOT . SITEURL . '/files/template/' . TEMPLATE . '/images/';
-
-						$dir = ROOT . SITEURL . '//tpl/lp/' . TEMPLATE . '/images/';
-						if(is_dir($dir)) {
-							$files = scandir($dir);
-							array_shift($files);
-							array_shift($files);
-							for($i=0; $i<sizeof($files); $i++)
-								echo "<div><div class='over'><img src='http://".SITEURL."/tpl/lp/" . TEMPLATE . "/images/".$files[$i]."' alt='' title='' /></div><br /><span>".$files[$i]."</span></div>";
-						}*/
-					?>
-					</div>
-					<input type="hidden" id="selected_img_placeholder">
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		</div>
-		</div>
-		</div>
-		</div>
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn" id="cancel">Отменить</button>
-		<button type="button" class="btn btn-success" id="choose">Выбрать</button>
-	</div>
-</div>
--->
 
 <?php
-// Подключаем файл подключаемых файлов к блокам
+//// Подключаем файл подключаемых файлов к блокам
+//require_once ($_SERVER['DOCUMENT_ROOT'] . '/editor/head.php');
+//
+//$sql = $web->query("SELECT * FROM module_lp_block ORDER BY position");
+//
+//$content_page = "";         //контент страницы
+//$content_page_head = "<div id='page_head'>";    //контент блока head страницы (блок div содержащий подключаемые файлы)
+//
+//if($sql->num_rows > 0)
+//{
+//	while($row = $sql->fetch_assoc())
+//	{
+//		$sql_type = $web->query("SELECT * FROM module_lp_block_type WHERE id = {$row['id_type']} LIMIT 1");
+//		if($sql->num_rows > 0)
+//		{
+//			$row_type = $sql_type->fetch_assoc();
+//			$content_page_head .= $head_page[$row_type['name']];
+//
+//			//Создаем уникальный идендификатор для блока
+//			$blockId = $row_type['name'] . "_" . substr(md5(microtime() . rand(0, 9999)), 0, 5);
+//			$pos = strpos($row['html'], 'type="' . $row_type['name'] . '"');
+//			$str1 = substr($row['html'], 0, $pos);
+//			$str2 = ' id="' . $blockId . '" ';
+//			$str3 = substr($row['html'], $pos, strlen($row['html']));
+//			$row['html'] = $str1 . $str2 . $str3;
+//
+//			if($row_type['name'] == 'map')
+//			{
+//				$row['html'] .= "<script>init_map('yandex', '{$blockId}')</script>";
+//			}
+//		}
+//
+//		$content_page .= $row['html'];
+//	}
+//}
+//
+//$content_page_head .= "</div>";
+//
+//
+//
+//
+//$content_page = $content_page_head . $content_page;
+?>
+
+
+<?php
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/editor/head.php');
 
-$sql = $web->query("SELECT * FROM module_lp_block ORDER BY position");
-$content_page = "";         //контент страницы
-$content_page_head = "<div id='page_head'>";    //контент блока head страницы (блок div содержащий подключаемые файлы)
+$content_page_head = "<div id='page_head'>";
+foreach($head_page as $item)
+{
+	$content_page_head .= $item;
+}
+$content_page_head .= "</div>";
+
+$sql = $web->query("SELECT * FROM module_lp WHERE title = 'NEW'");
 
 if($sql->num_rows > 0)
 {
-	while($row = $sql->fetch_assoc())
-	{
-		$sql_type = $web->query("SELECT * FROM module_lp_block_type WHERE id = {$row['id_type']} LIMIT 1");
-		if($sql->num_rows > 0)
-		{
-			$row_type = $sql_type->fetch_assoc();
-			$content_page_head .= $head_page[$row_type['name']];
-
-			//Создаем уникальный идендификатор для блока
-			$blockId = $row_type['name'] . "_" . substr(md5(microtime() . rand(0, 9999)), 0, 5);
-			$pos = strpos($row['html'], 'type="' . $row_type['name'] . '"');
-			$str1 = substr($row['html'], 0, $pos);
-			$str2 = ' id="' . $blockId . '" ';
-			$str3 = substr($row['html'], $pos, strlen($row['html']));
-			$row['html'] = $str1 . $str2 . $str3;
-
-			if($row_type['name'] == 'map')
-			{
-				$row['html'] .= <<<HTML
-				<script>
-					ymaps.ready(init);
-					function init() {
-						var geocoder = new ymaps.geocode('Санкт-Петербург,Оптиков,4/2', { results: 1 });
-							geocoder.then(function (res) {
-							var coord = res.geoObjects.get(0).geometry.getCoordinates();
-							var map = new ymaps.Map('{$blockId}', {
-								center: coord,
-								zoom: 16,
-								//behaviors: ['default', 'scrollZoom'],
-								controls: ['mapTools']
-							});
-				
-							map.geoObjects.add(res.geoObjects.get(0));
-							map.controls.add('mapTools').add('zoomControl').add('typeSelector');
-							}
-						);
-					}
-				</script>
-HTML;
-
-			}
-		}
-
-		$content_page .= $row['html'];
-	}
+	$row = $sql->fetch_assoc();
+	$content = $row['content_html'];
+	$header = $row['header_html'];
+	$footer = $row['footer_html'];
 }
 
-$content_page_head .= "</div>";
-$content_page = $content_page_head . $content_page;
+$content_page = $content_page_head . $header . "<div class='content'>" . $content ."</div>" . $footer;
 ?>
+
 
 <div class="space" style="height: 70px"></div>
 <!--страница-->
@@ -378,7 +325,7 @@ $content_page = $content_page_head . $content_page;
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="cancelAddBlocks();">×</button>
-				<h4 class="modal-title">Галерея изображения для слайда</h4>
+				<h4 class="modal-title">Галерея изображений</h4>
 				<div class='block-upload'><div>Загрузка файлов для галереи</div><div id='uploadBtn' class='btn upload-btn'><span>Выбрать файл<span></div><span id='statusUpload'></span></div>
 			</div>
 			<div class="modal-body">
