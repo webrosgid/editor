@@ -93,7 +93,7 @@
 
 <body>
 
-<div class="header">
+<div class="header" >
 	<div class="border-head">
 		<div class="container">
 			<div id="top_menu" class="top-menu">
@@ -104,7 +104,7 @@
 				<div class="control">
 					<button id="addBlockBtn" onclick="showModal('#addBlockModal')" class="btn">Добавить блок</button>
 					<button onclick="uploadContextSetting('lp_background');" class="btn">Фон страницы</button>
-					<button id="saveBtn" class="btn"><img src="/editor/images/save-ico.png" alt="Сохранить">Сохранить</button>
+					<button id="saveBtn" class="btn" onClick="Save()"><img src="/editor/images/save-ico.png" alt="Сохранить">Сохранить</button>
 				</div>
 
 			</div>
@@ -117,7 +117,7 @@
 <!--<div class="clearHeader"></div>-->
 <?//// echo htmlspecialchars_decode(stripslashes($stack));?>
 <!--<input type="hidden" name="id" id="template_id" value="--><?php //echo TEMPLATE;?><!--">-->
-<!--<input type="hidden" name="siteurl" id="siteurl" value="--><?php //echo SITEURL;?><!--">-->
+<input type="hidden" class="siteurl" name="siteurl" id="siteurl" value="<?php echo SITEURL;?>">
 <!--
 <div class="modal hide fade in photos" id="wb_dialog_7" role="dialog" aria-hidden="false">
 	<div class="modal-header">

@@ -1,6 +1,14 @@
 var ckeditors = [];
 
+
+var timerId = setInterval(function() {
+	SaveTemp();
+}, 100000);
+
+
+
 $(document).ready(function() {
+
 	var page = $('#page');
 
 	$('.site-header').height($('.site-header').height());
@@ -115,6 +123,42 @@ $(document).ready(function() {
 
 });
 
+/*button Save*/
+function Save()
+{
+
+	//var content= $('#page').html();
+	var header = $('#page').find('.row-header').html();
+	//$('#page').find('.row-header').remove();
+    var footer = $('#page').find('.row-footer').html();
+    //$('#page').find('.row-footer').remove();
+    var menu = $('#page').find('div[type=menu]').parent().parent().html();
+    //$('#page').find('div[type=menu]').parent().parent().remove();
+    var content= $('#page').html();
+    var site=$('.siteurl').val();
+	$.post('/editor/ajax/save.php', {content: content, header: header, footer: footer, menu: menu, site: site}, function(result){console.log(result);});
+  //console.log(header);
+}
+/* end button Save*/
+
+/*SaveTemp*/
+
+function SaveTemp()
+{
+
+    var content= $('#page').html();
+    var header = $('#page').find('.row-header').html();
+    //$('#page').find('.row-header').remove();
+    var footer = $('#page').find('.row-footer').html();
+    //$('#page').find('.row-footer').remove();
+    var menu = $('#page').find('div[type=menu]').parent().parent().html();
+    //$('#page').find('div[type=menu]').parent().parent().remove();
+    var content= $('#page').html();
+    var site=$('.siteurl').val();
+    $.post('/editor/ajax/saveTemp.php', {content: content, header: header, footer: footer, menu: menu, site: site}, function(result){console.log(result);});
+    console.log(5);
+}
+/* end button Save*/
 
 //Открыть панель настроек
 function openSettingPanel() {
