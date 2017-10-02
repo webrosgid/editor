@@ -212,5 +212,5 @@ switch($data['context']){
 		break;
 
 }
-
+//$result .= "<input type='hidden' id='hiddenBlockNumber' value='{$data['id']}'>";
 echo $result;

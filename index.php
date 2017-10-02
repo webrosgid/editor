@@ -45,7 +45,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
+ <html lang="ru" xmlns="http://www.w3.org/1999/html">
 <head>
 <meta charset="UTF-8">
 <title>Rosgid Engine 2.0 - Landing Page Editor</title>
@@ -90,7 +90,14 @@
 ?>
 
 </head>
+<script>
+    $('#undo').click(function(){
+        $.post(
+            "/editor/ajax/undo.php",
 
+        );
+    });
+</script>
 <body>
 
 <div class="header" >
@@ -102,6 +109,7 @@
 				</div>
 
 				<div class="control">
+                    <button  id="undo" class="btn">Отменить</button>
 					<button id="addBlockBtn" onclick="showModal('#addBlockModal')" class="btn">Добавить блок</button>
 					<button onclick="uploadContextSetting('lp_background');" class="btn">Фон страницы</button>
 					<button id="saveBtn" class="btn" onClick="Save()"><img src="/editor/images/save-ico.png" alt="Сохранить">Сохранить</button>
@@ -269,6 +277,7 @@ $content_page = $content_page_head . $content_page;
 	<div class="btn-setting-group">
 		<i class="fa fa-check-circle-o btn-save" aria-hidden="true"></i>
 		<i class="fa fa-times-circle-o btn-close" onclick="closeSettingPanel();" aria-hidden="true"></i>
+        <i class="fa fa-undo" onclick="undo();" aria-hidden="true"></i>
 	</div>
 	<div class="setting-content">
 

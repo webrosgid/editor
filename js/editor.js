@@ -156,7 +156,7 @@ function SaveTemp()
     var content= $('#page').html();
     var site=$('.siteurl').val();
     $.post('/editor/ajax/saveTemp.php', {content: content, header: header, footer: footer, menu: menu, site: site}, function(result){console.log(result);});
-    console.log(5);
+   // console.log(5);
 }
 /* end button Save*/
 
