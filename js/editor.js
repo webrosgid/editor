@@ -179,7 +179,7 @@ function loadPicker(idBlock) {
 	picker.linkTo(function(color) {
 		if(idBlock == undefined)
 		{
-			$('body').css('background-color', color);
+			$('#page').css('background-color', color);
 		}
 		else
 		{
@@ -193,14 +193,7 @@ function loadPickerButton(idBlock) {
 	var picker = $.farbtastic('#selectColor');
 	picker.setColor('#fff');
 	picker.linkTo(function(color) {
-		if(idBlock == undefined)
-		{
-			$('body').css('background-color', color);
-		}
-		else
-		{
-			$("a[data^='menu']").css({'background-color': color, 'padding':'7px 7px 7px 7px'});
-		}
+		$('#'+idBlock).find("a[data^='menu']").css({'background-color': color, 'padding':'7px 7px 7px 7px'});
 	});
 }
 
@@ -308,7 +301,7 @@ function setImageBackground(url, idBlock) {
 	var href = "url('"+url+"')";
 
 	if(idBlock == ''){
-		$('body').css({
+		$('#page').css({
 			'background' : href,
 			'background-size' : '100%'
 		});
@@ -358,17 +351,16 @@ function deleteImage(item) {
 function clearSetting(type, idBlock) {
 	if(type == 'background')
 	{
-		if(idBlock == undefined) {
+		if(idBlock === undefined || idBlock === false)
+		{
 			$('.settings-box').html('');
-			$('body').css('background-color', '');
-			$('body').css('background', '');
+			$('#page').removeAttr('style');
 		}
 		else
 		{
 			$('.settings-box').html('');
 			$('.settings-box-btn').html('');
-			$('#'+idBlock).css('background-color', '');
-			$('#'+idBlock).css('background', '');
+			$('#'+idBlock).closest('.el').removeAttr('style');
 		}
 	}
 
@@ -718,6 +710,39 @@ function uploadImages(dir, idBlock) {
 
 	});
 }
+
+/*Сохранить страницу*/
+function savePage() {
+	$('div[type=map]').each(function() {
+		$(this).html('');
+	});
+
+	$('div[type=slider]').each(function() {
+		$('#'+$(this).attr('id')).slick("unslick");
+	});
+
+	var content = $('.content').html();
+
+	$('div[type=map]').each(function() {
+		init_map($(this).attr('id'));
+	});
+
+	$('div[type=slider]').each(function() {
+		var code = $('#code_'+$(this).attr('id')).html();
+		eval(code);
+	});
+
+
+	var header = $('.content-header').html();
+	var footer = $('.content-footer').html();
+	var menu = $('.content-menu').html();
+	//var content = $('.content').html();
+	var site = $('#site_url').val();
+	var id_page = $('#id_page').val();
+
+	$.post('/editor/ajax/save.page.php', {content: content, header: header, footer: footer, menu: menu, site: site, id_page : id_page});
+}
+/* end Сохранить страницу*/
 
 
 

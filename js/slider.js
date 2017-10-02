@@ -1,26 +1,37 @@
-
-$(document).ready(function()
-{
-	eval("$('.single-item').slick({dots : true, autoplay : true, adaptiveHeight : true, arrows : true});");
-});
-
 //задать вид слайдера
 function setSliderView(item) {
 	var sliderId = item.attr('slider_id');
 	var view = item.attr('view');
 	$('#'+sliderId).slick("unslick");
+	var img = $('#' + sliderId).find('.sl-img');
+	var code = '';
 
 	switch(view){
-		case '1' : eval("$('#" + sliderId + "').slick({dots : true, autoplay : true, adaptiveHeight : true, arrows : true});");
-			$('#' + sliderId).find('.sl-img').height('650');
+		case '1' :
+			code = "$('#" + sliderId + "').slick({dots : true, autoplay : true, adaptiveHeight : true, arrows : true});";
+			eval(code);
+			img.height('650');
 			break;
-		case '2' : eval("$('#" + sliderId + "').slick({dots : true, autoplay : true, adaptiveHeight : true, arrows : true, slidesToShow: 3, slidesToScroll: 3});");
-			$('#' + sliderId).find('.sl-img').height('280');
+
+		case '2' :
+			code = "$('#" + sliderId + "').slick({dots : true, autoplay : true, adaptiveHeight : true, arrows : true, slidesToShow: 3, slidesToScroll: 3});";
+			eval(code);
+			img.height('280');
 			break;
-		case '3' : eval("$('#" + sliderId + "').slick({centerMode: true,centerPadding: '60px',slidesToShow: 3,responsive: [{breakpoint: 768,settings: {arrows: false,centerMode: true,centerPadding: '40px',slidesToShow: 3}},{breakpoint: 480,settings: {arrows: false,centerMode: true,centerPadding: '40px',slidesToShow: 1}}]});");
-			$('#' + sliderId).find('.sl-img').height('280');
+
+		case '3' :
+			code ="$('#" + sliderId + "').slick({centerMode: true,centerPadding: '60px',slidesToShow: 3,responsive: [{breakpoint: 768,settings: {arrows: false,centerMode: true,centerPadding: '40px',slidesToShow: 3}},{breakpoint: 480,settings: {arrows: false,centerMode: true,centerPadding: '40px',slidesToShow: 1}}]});";
+			eval(code);
+			img.height('280');
+			break;
+		default:
+			code = "$('#" + sliderId + "').slick({dots : true, autoplay : true, adaptiveHeight : true, arrows : true});";
+			eval(code);
+			img.height('650');
 			break;
 	}
+
+	$('#code_' + sliderId).html(code);
 
 }
 
@@ -85,7 +96,7 @@ function selectImageToSlide(img) {
 }
 
 //отмена выбора изображения для слайда
-function canselSelectImgToSlide() {
+function cancelSelectImgToSlide() {
 	var slideNum = $('.images-slider').attr('number');
 	var img = $('.sliders-panel-slide[number^='+slideNum+']').find('img');
 	img.attr('src', img.attr('prevsrc'));

@@ -107,7 +107,7 @@
 					<button class="btn">Личный кабинет</button>
 					<button class="btn">Изменить домен</button>
 					<button class="btn">Помощь</button>
-					<button id="saveBtn" class="btn"><img src="/editor/images/save-ico.png" alt="Сохранить">Сохранить</button>
+					<button id="saveBtn" class="btn" onclick="savePage();"><img src="/editor/images/save-ico.png" alt="Сохранить">Сохранить</button>
 				</div>
 
 			</div>
@@ -116,7 +116,8 @@
 </div>
 
 <!--<input type="hidden" name="id" id="template_id" value="--><?php //echo TEMPLATE;?><!--">-->
-<!--<input type="hidden" name="siteurl" id="siteurl" value="--><?php //echo SITEURL;?><!--">-->
+<input type="hidden" name="site_url" id="site_url" value="<?php echo SITEURL;?>">
+<input type="hidden" name="id_page" id="id_page" value="<?php echo $_COOKIE['landing_edit']?>">
 
 <?php
 //// Подключаем файл подключаемых файлов к блокам
@@ -167,7 +168,7 @@
 <?php
 require_once ($_SERVER['DOCUMENT_ROOT'] . '/editor/head.php');
 
-$content_page_head = "<div id='page_head'>";
+$content_page_head = "<div id='page_head' class='page-head'>";
 foreach($head_page as $item)
 {
 	$content_page_head .= $item;
@@ -179,12 +180,13 @@ $sql = $web->query("SELECT * FROM module_lp WHERE title = 'NEW'");
 if($sql->num_rows > 0)
 {
 	$row = $sql->fetch_assoc();
-	$content = $row['content_html'];
-	$header = $row['header_html'];
-	$footer = $row['footer_html'];
+	$content = "<div class='content'>" . $row['content_html'] . "</div>";
+	$header = "<div class='content-header'>" . $row['header_html'] . "</div>";
+	$menu = "<div class='content-menu'>" . $row['menu_html'] . "</div>";
+	$footer = "<div class='content-footer'>" . $row['footer_html'] . "</div>";
 }
 
-$content_page = $content_page_head . $header . "<div class='content'>" . $content ."</div>" . $footer;
+$content_page = $content_page_head . $header . $menu . $content . $footer;
 ?>
 
 
@@ -334,7 +336,7 @@ $content_page = $content_page_head . $header . "<div class='content'>" . $conten
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal" onclick="canselSelectImgToSlide();">Отмена</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" onclick="cancelSelectImgToSlide();">Отмена</button>
 				<button type="button" class="btn btn-primary" onclick="hideGallery();">Ок</button>
 			</div>
 		</div>

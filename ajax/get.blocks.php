@@ -41,6 +41,13 @@ foreach($jsn as $id)
 				$row['html'] .= "<script>init_map('{$blockId}')</script><input type='hidden' id='set_{$blockId}' x='59.9386300' y='30.3141300' z='12'>";
 			}
 
+			if($row_type['name'] == 'slider')
+			{
+				$row['html'] .= "<script id='code_{$blockId}'>$('#{$blockId}').slick({dots : true, autoplay : true, adaptiveHeight : true, arrows : true});</script>";
+			}
+
+
+
 		}
 
 		$result['content'] .= $row['html'];
