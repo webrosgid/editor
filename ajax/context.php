@@ -74,7 +74,7 @@ switch($data['context']){
 
 	//Формируем форму настройки слайдера
 	case 'slider':
-		$tpl .= "<div id='formSetting' class='form-setting'>";
+		$tpl .= "<div id='formSetting' class='form-setting' type_setting='slider'>";
 		$tpl .= "<div class='title-setting'>Настройка галереи</div>";
 
 		/*аккордион панель*/
@@ -126,7 +126,7 @@ switch($data['context']){
 
 		$tpl .= "</div>";
 		$tpl .= "<div class='block-upload'><div>Загрузка файлов для галереи</div><div id='uploadBtn' class='btn upload-btn'><span>Выбрать файл<span></div><span id='statusUpload'></span></div>";
-		$tpl .= "<button class='btn btn-sm' onclick='saveSettingSlide();'>Сохранить</button>&nbsp";
+		//$tpl .= "<button class='btn btn-sm' onclick='saveSettingSlide();'>Сохранить</button>&nbsp";
 		$tpl .= "</div>";
 		$tpl .= "</div>";
 		/*end слайды*/
@@ -214,36 +214,36 @@ switch($data['context']){
 
 	//Формируем форму настройки карты
 	case 'map':
-		$tpl .= "<div id='formSetting' class='form-setting'>";
+		$tpl .= "<div id='formSetting' class='form-setting' id_map='{$data['id']}' type_setting='map'>";
 		$tpl .= "<div class='title-setting'>Настройка карты</div>";
 		$tpl .= "<div class='map-coordinate'>";
 
 		$tpl .= "<div class='input-group'>";
 		$tpl .= "<span class='input-group-addon'>Координата X</span>";
-		$tpl .= "<input type='text' class='form-control' name='map_x' value='59.9386300'>";
+		$tpl .= "<input type='text' class='form-control' name='map_x' value=''>";
 		$tpl .= "</div>";
 
 		$tpl .= "<div class='input-group'>";
 		$tpl .= "<span class='input-group-addon'>Координата Y</span>";
-		$tpl .= "<input type='text' class='form-control' name='map_y' value='30.3141300'>";
+		$tpl .= "<input type='text' class='form-control' name='map_y' value=''>";
 		$tpl .= "</div>";
 
 		$tpl .= "<div class='input-group'>";
 		$tpl .= "<span class='input-group-addon'>Масштаб</span>";
-		$tpl .= "<input type='text' class='form-control' name='map_z' value='12'>";
+		$tpl .= "<input type='text' class='form-control' name='map_z' value=''>";
 		$tpl .= "</div>";
 
 		$tpl .= "</div>";
 
-		$tpl .= "<div class='type-map'></div>";
-		$tpl .= "<label class='radio-inline'><input type='radio' name='optradio' value='yandex' onclick='selectMap($(this));'>Яндекс</label>";
-		$tpl .= "<label class='radio-inline'><input type='radio' name='optradio' value='google' onclick='selectMap($(this));'>Google</label>";
-		$tpl .= "<label class='radio-inline'><input type='radio' name='optradio' value='2gis' onclick='selectMap($(this));'>2GIS</label>";
+		$tpl .= "<div class='type-map'>";
+		$tpl .= "<label class='radio-inline'><input type='radio' name='optradio' id='radio_ya' value='yandex' onclick='selectMap($(this));'>Яндекс</label>";
+		$tpl .= "<label class='radio-inline'><input type='radio' name='optradio' id='radio_gl' value='google' onclick='selectMap($(this));'>Google</label>";
+		//$tpl .= "<label class='radio-inline'><input type='radio' name='optradio' id='radio_2g' value='2gis' onclick='selectMap($(this));'>2GIS</label>";
 		$tpl .= "</div>";
 
 		$tpl .="<div class='settings-map' id='set_map'></div>";
 
-		$tpl .= "<script>init_ya();</script>";
+		$tpl .= "<script>set_coord(); init_map_setting();</script>";
 		$tpl .= "</div>";
 
 		$result = "$('#settingPanel').find('.setting-content').html(\"{$tpl}\");";

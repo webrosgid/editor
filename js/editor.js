@@ -124,6 +124,17 @@ $(document).ready(function() {
 	/******************/
 });
 
+//сохранить настройки блока
+function saveSetting() {
+	var type = $('.form-setting').attr('type_setting')
+
+	switch(type){
+		case 'map': saveMapSetting(); break;
+		case 'slider': saveSettingSlide(); break;
+	}
+
+	closeSettingPanel();
+}
 
 //Открыть панель настроек
 function openSettingPanel() {
@@ -450,15 +461,15 @@ function addSelectBlocks() {
 
 	$.post('/editor/ajax/get.blocks.php', {jsn : jsn} ,  function(result) {
 		result = JSON.parse(result);
-		$('.row-footer').before(result.content);
+		$('.content').append(result.content);
 
 		for(var i=0; i<result.type.length; i++)
 		{
-			var selector = '#head_'+result.type[i];
-
-			if(!$("#page_head *").is(selector)){
-				$("#page_head").append(result.head[i]);
-			}
+			// var selector = '#head_'+result.type[i];
+			//
+			// if(!$("#page_head *").is(selector)){
+			// 	$("#page_head").append(result.head[i]);
+			// }
 
 			var code = '';
 			if(result.type[i] == 'slider'){
@@ -469,8 +480,12 @@ function addSelectBlocks() {
 
 		}
 	});
+
 	hideModal('#addBlockModal');
 	cancelAddBlocks();
+
+	var height = $("body").height();
+	$("html,body").animate({"scrollTop":height},5);
 }
 
 //Добавить блок
@@ -481,23 +496,21 @@ function addBlock(block) {
 
 	$.post('/editor/ajax/get.blocks.php', {jsn : jsn} ,  function(result) {
 		result = JSON.parse(result);
-		$('.row-footer').before(result.content);
+		$('.content').append(result.content);
 
 		for(var i=0; i<result.type.length; i++)
 		{
-			var selector = '#head_'+result.type[i];
-
-			if(!$("#page_head *").is(selector)){
-				$("#page_head").append(result.head[i]);
-			}
+			// var selector = '#head_'+result.type[i];
+			//
+			// if(!$("#page_head *").is(selector)){
+			// 	$("#page_head").append(result.head[i]);
+			// }
 
 			var code = '';
 			if(result.type[i] == 'slider'){
 				code = "$('#"+result.id[i]+"').slick({autoplay : true, adaptiveHeight : true, arrows : true, dots : true});";
 				eval(code);
 			}
-
-
 		}
 
 		var height = $("body").height();

@@ -1,47 +1,105 @@
-$(document).ready(function() {
-	//google.maps.event.addDomListener(window, 'load', init_gl);
-
-});
-
-function init_map(type, id) {
+//инициализация карт для страницы
+function init_map(id) {
+	var type = $('#'+id).attr('map_type');
 	switch(type){
 		case 'yandex':
-			init_yandex_map(id);
+			yandex_map(id);
+			break;
+		case 'google':
+			google_map(id);
 			break;
 		default:
-			init_yandex_map(id);
+			yandex_map(id);
 			break;
 	}
 }
 
+//инциализация карт для настройки
+function init_map_setting() {
+	var id = $('.form-setting').attr('id_map');
+	var type = $('#'+id).attr('map_type');
+	switch(type){
+		case 'yandex':
+			$('#radio_ya').prop('checked',true);
+			init_ya();
+			break;
+		case 'google':
+			$('#radio_gl').prop('checked',true);
+			$(function() {init_gl();});
+			break;
+		default:
+			$('#radio_2g').prop('checked',true);
+			init_ya();
+			break;
+	}
+}
 
-function init_yandex_map(id) {
-	ymaps.ready(function() {
-		var geocoder = new ymaps.geocode('Санкт-Петербург,Оптиков,4/2', { results: 1 });
+//Сохранить настройки карты
+function saveMapSetting() {
+	var map_x = $('input[name="map_x"]').val(),
+		map_y = $('input[name="map_y"]').val(),
+		map_z = $('input[name="map_z"]').val();
+	var id_map = $('.form-setting').attr('id_map');
 
-		geocoder.then(function (res) {
-				var coord = res.geoObjects.get(0).geometry.getCoordinates();
-				var map = new ymaps.Map(id, {
-					center: coord,
-					zoom: 16,
-					controls: ['mapTools']
-				});
+	$('#set_' + id_map).attr('x', map_x);
+	$('#set_' + id_map).attr('y', map_y);
+	$('#set_' + id_map).attr('z', map_z);
 
-				map.geoObjects.add(res.geoObjects.get(0));
-				map.controls.add('mapTools').add('zoomControl').add('typeSelector');
-			}
-		);
-	});
+	$('#'+id_map).html('');
+	$('#'+id_map).attr('map_type', $('.type-map').find('input:radio:checked').val());
+	init_map(id_map);
 }
 
 
+/*для страницы сайта*/
+function yandex_map(id) {
+	ymaps.ready(function() {
+		var x = $('#set_' + id).attr('x');
+		var y = $('#set_' + id).attr('y');
+		var z = $('#set_' + id).attr('z');
+		var geocoder = new ymaps.geocode([x, y], { results: 1 });
+
+		var map = new ymaps.Map (id, {
+			center: [x, y],
+			zoom: parseInt(z)
+		});
+		map.controls.add('zoomControl', { left: 5, top: 5 }).add('typeSelector').add('mapTools', { left: 35, top: 5 });
+
+		var marker = new ymaps.Placemark([x, y], {
+			style: "default#lightblueSmallPoint"
+			//hintContent: geocoder.then(function (res) {res.geoObjects.get(0).getAddressLine()})
+		});
+
+		map.geoObjects.add(marker);
+	});
+}
+
+function google_map(id) {
+	$(function() {
+		var x = $('#set_' + id).attr('x');
+		var y = $('#set_' + id).attr('y');
+		var z = $('#set_' + id).attr('z');
+
+		console.log(z);
+		var mapOptions = {
+			zoom: parseInt( z ),
+			center: new google.maps.LatLng(x, y),
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+
+		var map = new google.maps.Map(document.getElementById(id), mapOptions);
+
+		var marker = new google.maps.Marker({
+			position: map.getCenter(),
+			map: map,
+			title: 'Текст марке'
+		});
+	});
+}
+/*****************************************************/
 
 
-
-
-
-
-
+/*для выбора типа и настройки*/
 // google карты
 function init_gl() {
 	var map_x = $('input[name="map_x"]').val(),
@@ -66,7 +124,6 @@ function init_gl() {
 	var infowindow = new google.maps.InfoWindow();
 
 	google.maps.event.addListener(marker, 'click', function(e) {
-		console.log(e);
 		var cx = e.latLng.lat().toPrecision(6),
 			cy = e.latLng.lng().toPrecision(6),
 			cz = map.getZoom();
@@ -132,6 +189,7 @@ function init_2gis() {
 			'zoom': parseInt( map_z )
 		});
 }
+/*****************************/
 
 //задаем координаты
 function set_coord(x, y, z) {
@@ -139,7 +197,16 @@ function set_coord(x, y, z) {
 		b = $('input[name="map_y"]'),
 		c = $('input[name="map_z"]');
 
-	a.val(x); b.val(y); c.val(z);
+	if(x !== undefined && y !== undefined && z !== undefined) {
+		a.val(x);
+		b.val(y);
+		c.val(z);
+	}else{
+		var id_map = $('.form-setting').attr('id_map');
+		a.val($('#set_' + id_map).attr('x'));
+		b.val($('#set_' + id_map).attr('y'));
+		c.val($('#set_' + id_map).attr('z'));
+	}
 }
 
 //Выбор крты

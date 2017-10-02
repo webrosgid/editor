@@ -217,7 +217,7 @@ $content_page = $content_page_head . $header . "<div class='content'>" . $conten
 <!--панель настроек-->
 <div id="settingPanel" class="setting-panel" style="display: none;">
 	<div class="btn-setting-group">
-		<i class="fa fa-check-circle-o btn-save" aria-hidden="true"></i>
+		<i class="fa fa-check-circle-o btn-save" onclick="saveSetting();" aria-hidden="true"></i>
 		<i class="fa fa-times-circle-o btn-close" onclick="closeSettingPanel();" aria-hidden="true"></i>
 	</div>
 	<div class="setting-content">
