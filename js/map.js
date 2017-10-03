@@ -57,7 +57,6 @@ function yandex_map(id) {
 		var x = $('#set_' + id).attr('x');
 		var y = $('#set_' + id).attr('y');
 		var z = $('#set_' + id).attr('z');
-		var geocoder = new ymaps.geocode([x, y], { results: 1 });
 
 		var map = new ymaps.Map (id, {
 			center: [x, y],
@@ -65,12 +64,10 @@ function yandex_map(id) {
 		});
 		map.controls.add('zoomControl', { left: 5, top: 5 }).add('typeSelector').add('mapTools', { left: 35, top: 5 });
 
-		var marker = new ymaps.Placemark([x, y], {
-			style: "default#lightblueSmallPoint"
-			//hintContent: geocoder.then(function (res) {res.geoObjects.get(0).getAddressLine()})
+		var geocoder = new ymaps.geocode(map.getCenter(), {results: 1});
+		geocoder.then(function (res) {
+			map.geoObjects.add(res.geoObjects.get(0));
 		});
-
-		map.geoObjects.add(marker);
 	});
 }
 
@@ -88,10 +85,13 @@ function google_map(id) {
 
 		var map = new google.maps.Map(document.getElementById(id), mapOptions);
 
+		var geocoder = new google.maps.Geocoder(map.getCenter());
+		console.log(geocoder);
+
 		var marker = new google.maps.Marker({
 			position: map.getCenter(),
 			map: map,
-			title: 'Текст марке'
+			///title: 'Текст марке'
 		});
 	});
 }

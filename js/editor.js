@@ -1,10 +1,14 @@
 var ckeditors = [];
 
+var timerId = setInterval(function() {
+	savePage('yes')
+}, 600000);
+
 $(document).ready(function() {
 	var page = $('#page');
 
-	$('.site-header').height($('.site-header').height());
-	$('.site-footer').height($('.site-footer').height());
+	//$('.site-header').height($('.site-header').height());
+	//$('.site-footer').height($('.site-footer').height());
 
 	/*Отображение и скрытие рамки при наведении на компонент страницы*/
 	page.on('mouseenter', '.el', function() {
@@ -14,7 +18,7 @@ $(document).ready(function() {
 			var type = $(this).children().attr('type');
 			var type2 = $(this).children().children().attr('type');
 
-			if(type != 'footer' && type != 'header') {
+			if(type != 'footer' && type != 'header' && type2 != 'menu') {
 
 				if(type2 != 'menu') {
 					link = '<i class="fa fa-link" onclick="addLink($(this));" aria-hidden="true" title="Привязать к пункту меню"></i>';
@@ -412,9 +416,11 @@ function showToolbar() {
 //Поместить блок над предыдущим
 function liftUp(up) {
 	var prevType = up.closest('.el').prev().children().attr('type');
+
 	if(prevType != 'header'){
 		up.closest('.el').insertBefore(up.closest('.el').prev());
 	}
+
 	return false;
 }
 
@@ -485,19 +491,25 @@ function addBlock(block) {
 		result = JSON.parse(result);
 		$('.content').append(result.content);
 
-		for(var i=0; i<result.type.length; i++)
-		{
+		for(var i=0; i<result.type.length; i++) {
 			// var selector = '#head_'+result.type[i];
 			//
 			// if(!$("#page_head *").is(selector)){
 			// 	$("#page_head").append(result.head[i]);
 			// }
 
-			var code = '';
-			if(result.type[i] == 'slider'){
-				code = "$('#"+result.id[i]+"').slick({autoplay : true, adaptiveHeight : true, arrows : true, dots : true});";
-				eval(code);
-			}
+			// var code = '';
+			// if(result.type[i] == 'slider'){
+			// 	code = "$('#"+result.id[i]+"').slick({autoplay : true, adaptiveHeight : true, arrows : true, dots : true});";
+			// 	eval(code);
+			// 	$('#paramsBlock').prepend("<script id='code_"+result.id[i]+"'>$('#"+result.id[i]+"').slick({dots : true, autoplay : true, adaptiveHeight : true, arrows : true});</script>");
+			// }
+			//
+			// if(result.type[i] == 'map'){
+			// 	// code = "init_map('"+result.id[i]+"');";
+			// 	// eval(code);
+			// 	$('#paramsBlock').prepend("<script id='code_"+result.id[i]+"'>init_map('"+result.id[i]+"');</script><input type='hidden' id='set_"+result.id[i]+"' x='59.9386300' y='30.3141300' z='12'>");
+			// }
 		}
 
 		var height = $("body").height();
@@ -713,7 +725,7 @@ function uploadImages(dir, idBlock) {
 }
 
 /*Сохранить страницу*/
-function savePage() {
+function savePage(temp) {
 	$('div[type=map]').each(function() {
 		$(this).html('');
 	});
@@ -737,11 +749,19 @@ function savePage() {
 	var header = $('.content-header').html();
 	var footer = $('.content-footer').html();
 	var menu = $('.content-menu').html();
-	content += $('.content-callback').html();
+	//content += $('.content-callback').html();
 	var site = $('#site_url').val();
 	var id_page = $('#id_page').val();
 
-	$.post('/editor/ajax/save.page.php', {content: content, header: header, footer: footer, menu: menu, site: site, id_page : id_page});
+	$.post('/editor/ajax/save.page.php', {
+		content: content,
+		header : header,
+		footer : footer,
+		menu   : menu,
+		site   : site,
+		id_page: id_page,
+		temp : temp
+	});
 }
 /* end Сохранить страницу*/
 

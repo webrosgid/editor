@@ -107,7 +107,7 @@
 					<button class="btn">Личный кабинет</button>
 					<button class="btn">Изменить домен</button>
 					<button class="btn">Помощь</button>
-					<button id="saveBtn" class="btn" onclick="savePage();"><img src="/editor/images/save-ico.png" alt="Сохранить">Сохранить</button>
+					<button id="saveBtn" class="btn" onclick="savePage('no');"><img src="/editor/images/save-ico.png" alt="Сохранить">Сохранить</button>
 				</div>
 
 			</div>
@@ -116,6 +116,7 @@
 </div>
 
 <!--<input type="hidden" name="id" id="template_id" value="--><?php //echo TEMPLATE;?><!--">-->
+
 <input type="hidden" name="site_url" id="site_url" value="<?php echo SITEURL;?>">
 <input type="hidden" name="id_page" id="id_page" value="<?php echo $_COOKIE['landing_edit']?>">
 
@@ -194,24 +195,6 @@ $content_page = $content_page_head . $header . $menu . $content . $footer;
 <!--страница-->
 <div id="page" class="container-fluid">
 	<?=$content_page  ?>
-
-	<div class="content-callback">
-		<!-- Обратный звонок-->
-		<div id="call" class="call">
-			<div>
-				<div class="text" align="center">
-					<div id="blok_tel">
-						<h3>ЗАКАЗ ОБРАТНОГО ЗВОНКА</h3>
-						<input type="text" name="tel" placeholder="Номер телефона" required="required" class="inputbox">
-						<input type="submit" class="big-button" name="submit_tel">
-					</div>
-				</div>
-				<a href="#close" title="Закрыть">Закрыть</a>
-			</div>
-		</div>
-		<!-- end Обратный звонок-->
-	</div>
-
 </div>
 <!--end страница-->
 
@@ -336,6 +319,21 @@ $content_page = $content_page_head . $header . $menu . $content . $footer;
 	<script>uploadImages('slider');</script>
 </div>
 <!-- end Галерея слайдов-->
+
+<!-- Обратный звонок-->
+<div id="call" class="call">
+	<div>
+		<div class="text" align="center">
+			<div id="blok_tel">
+				<h3>ЗАКАЗ ОБРАТНОГО ЗВОНКА</h3>
+				<input type="text" name="tel" placeholder="Номер телефона" required="required" class="inputbox">
+				<input type="submit" class="big-button" name="submit_tel">
+			</div>
+		</div>
+		<a href="#close" title="Закрыть">Закрыть</a>
+	</div>
+</div>
+<!-- end Обратный звонок-->
 
 
 

@@ -11,6 +11,8 @@ $jsn = json_decode($jsn);
 
 $result = array();
 
+$dop = '';
+
 foreach($jsn as $id)
 {
 	$sql = $web->query("SELECT * FROM module_lp_block WHERE id_type = {$id} LIMIT 1");
@@ -38,12 +40,12 @@ foreach($jsn as $id)
 
 			if($row_type['name'] == 'map')
 			{
-				$row['html'] .= "<script id='code_{$blockId}'>init_map('{$blockId}')</script><input type='hidden' id='set_{$blockId}' x='59.9386300' y='30.3141300' z='12'>";
+				$row['html'] .= "<div><script id='code_{$blockId}'>init_map('{$blockId}')</script><input type='hidden' id='set_{$blockId}' x='59.9386300' y='30.3141300' z='12'></div>";
 			}
 
 			if($row_type['name'] == 'slider')
 			{
-				$row['html'] .= "<script id='code_{$blockId}'>$('#{$blockId}').slick({dots : true, autoplay : true, adaptiveHeight : true, arrows : true});</script>";
+				$row['html'] .= "<div><script id='code_{$blockId}'>$('#{$blockId}').slick({dots : true, autoplay : true, adaptiveHeight : true, arrows : true});</script></div>";
 			}
 
 

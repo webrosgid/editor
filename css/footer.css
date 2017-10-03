@@ -17,3 +17,13 @@
 .footer-nav-bar .menu-item a{
 	color: black;
 }
+
+.footer-text{
+	max-width: 70%;
+	margin: 10px;
+}
+
+.footer-info{
+	max-width: 30%;
+	margin: 10px;
+}

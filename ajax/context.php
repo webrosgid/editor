@@ -28,7 +28,7 @@ switch($data['context']){
 
 	//Формируем форму настройки шапки страницы
 	case 'header':
-		$tpl .= "<div id='formSetting' class='form-setting' type_setting='header'>";
+		$tpl .= "<div id='formSetting' class='form-setting' id_header='{$data['id']}' type_setting='header'>";
 		$tpl .= "<div class='title-setting'>Настройка шапки</div>";
 
 		$tpl .= "<div class='head-setting'>Логотип</div>";
@@ -57,7 +57,7 @@ switch($data['context']){
 
 	//Формируем форму настройки подвала страницы
 	case 'footer':
-		$tpl .= "<div id='formSetting' class='form-setting' type_setting='footer'>";
+		$tpl .= "<div id='formSetting' class='form-setting' id_footer='{$data['id']}' type_setting='footer'>";
 		$tpl .= "<div class='title-setting'>Настройка подвала</div>";
 
 		$tpl .= "<div class='head-setting'>Фон подвала</div>";
@@ -152,7 +152,7 @@ switch($data['context']){
 
 	//Формируем форму настройки текстового блока
 	case 'text_block':
-		$tpl .= "<div id='formSetting' class='form-setting' type_setting='text_block'>";
+		$tpl .= "<div id='formSetting' class='form-setting' id_text_block='{$data['id']}' type_setting='text_block'>";
 		$tpl .= "<div class='title-setting'>Настройка текстового блока</div>";
 
 		$tpl .= "<div class='head-setting'>Фон текстового блока</div>";
@@ -175,7 +175,7 @@ switch($data['context']){
 
 	//Формируем форму настройки главного меню
 	case 'menu':
-		$tpl .= "<div id='formSetting' class='form-setting' type-setting='menu'>";
+		$tpl .= "<div id='formSetting' class='form-setting' id_menu='{$data['id']}' type-setting='menu'>";
 		$tpl .= "<div class='title-setting'>Настройка главного меню</div>";
 
 		$tpl .= "<div class='head-setting'>Фон меню</div>";
