@@ -9,7 +9,7 @@ $sliders = $data['sliders'];
 switch($data['context']){
 	//Формируем форму настройки фона страницы
 	case 'lp_background':
-		$tpl .= "<div id='formSetting' class='form-setting'>";
+		$tpl .= "<div id='formSetting' class='form-setting' type_setting='lp-background'>";
 		$tpl .= "<div class='title-setting'>Настройка фона страницы</div>";
 		$tpl .= "<div class='input-group'>";
 		$tpl .= "<span class='input-group-addon'>Тип фона страницы</span>";
@@ -28,8 +28,12 @@ switch($data['context']){
 
 	//Формируем форму настройки шапки страницы
 	case 'header':
-		$tpl .= "<div id='formSetting' class='form-setting'>";
+		$tpl .= "<div id='formSetting' class='form-setting' type_setting='header'>";
 		$tpl .= "<div class='title-setting'>Настройка шапки</div>";
+
+		$tpl .= "<div class='head-setting'>Логотип</div>";
+		$tpl .= "<img class='set-logo' src=''>";
+		$tpl .= "<div class='block-upload'><div id='uploadBtn' class='btn upload-btn'><span>Изменить<span></div><span id='statusUpload'></span></div>";
 
 		$tpl .= "<div class='head-setting'>Фон шапки</div>";
 		$tpl .= "<div class='input-group'>";
@@ -40,18 +44,20 @@ switch($data['context']){
 		$tpl .= "<option value='type-img'>Изображение</option>";
 		$tpl .= "</select>";
 		$tpl .= "</div>";
-
 		$tpl .="<div class='settings-box'>";
 		$tpl .="</div>";
 
+
+
 		$tpl .= "</div>";
+		$tpl .= "<script>$('.set-logo').attr('src', $('#logo_img').attr('src')); uploadImages('logo');</script>";
 
 		$result = "$('#settingPanel').find('.setting-content').html(\"{$tpl}\");";
 		break;
 
 	//Формируем форму настройки подвала страницы
 	case 'footer':
-		$tpl .= "<div id='formSetting' class='form-setting'>";
+		$tpl .= "<div id='formSetting' class='form-setting' type_setting='footer'>";
 		$tpl .= "<div class='title-setting'>Настройка подвала</div>";
 
 		$tpl .= "<div class='head-setting'>Фон подвала</div>";
@@ -74,7 +80,7 @@ switch($data['context']){
 
 	//Формируем форму настройки слайдера
 	case 'slider':
-		$tpl .= "<div id='formSetting' class='form-setting' type_setting='slider'>";
+		$tpl .= "<div id='formSetting' class='form-setting' id_slider='{$data['id']}' type_setting='slider'>";
 		$tpl .= "<div class='title-setting'>Настройка галереи</div>";
 
 		/*аккордион панель*/
@@ -101,7 +107,8 @@ switch($data['context']){
 		$tpl .= "<h4 class='panel-title'><a data-toggle='collapse' data-parent='#accordion' href='#sliders'>Слайды</a></h4>";
 		$tpl .= "</div>";
 		$tpl .= "<div id='sliders' class='panel-collapse collapse'>";
-		$tpl .= "<div class='panel-body sliders-panel' id_sl = '{$data['id']}'>";
+		$tpl .= "<div class='panel-body sliders-panel'>";
+		$tpl .= "<button class='btn add-slide-btn' onclick='addSlide($(this));'>Добавить слайд</button>";
 
 		$sliders = explode('#', $sliders);
 
@@ -119,14 +126,13 @@ switch($data['context']){
 			$tpl .= "<span class='input-group-addon'>Описание</span>";
 			$tpl .= "<textarea rows='5' class='form-control sl-set-desc'>{$slide[2]}</textarea>";
 			$tpl .= "</div>";
-			$tpl .= "<button class='btn btn-sm' argument = '{$slide[0]}' id_sl = '{$data['id']}' onclick='deleteSlide($(this));'>Удалить</button>";
+			$tpl .= "<button class='btn btn-sm' argument = '{$slide[0]}' onclick='deleteSlide($(this));'>Удалить</button>";
 			$tpl .= "</div>";
 			$tpl .= "</div>";
 		}
 
 		$tpl .= "</div>";
 		$tpl .= "<div class='block-upload'><div>Загрузка файлов для галереи</div><div id='uploadBtn' class='btn upload-btn'><span>Выбрать файл<span></div><span id='statusUpload'></span></div>";
-		//$tpl .= "<button class='btn btn-sm' onclick='saveSettingSlide();'>Сохранить</button>&nbsp";
 		$tpl .= "</div>";
 		$tpl .= "</div>";
 		/*end слайды*/
@@ -146,7 +152,7 @@ switch($data['context']){
 
 	//Формируем форму настройки текстового блока
 	case 'text_block':
-		$tpl .= "<div id='formSetting' class='form-setting'>";
+		$tpl .= "<div id='formSetting' class='form-setting' type_setting='text_block'>";
 		$tpl .= "<div class='title-setting'>Настройка текстового блока</div>";
 
 		$tpl .= "<div class='head-setting'>Фон текстового блока</div>";
@@ -169,7 +175,7 @@ switch($data['context']){
 
 	//Формируем форму настройки главного меню
 	case 'menu':
-		$tpl .= "<div id='formSetting' class='form-setting'>";
+		$tpl .= "<div id='formSetting' class='form-setting' type-setting='menu'>";
 		$tpl .= "<div class='title-setting'>Настройка главного меню</div>";
 
 		$tpl .= "<div class='head-setting'>Фон меню</div>";

@@ -194,6 +194,24 @@ $content_page = $content_page_head . $header . $menu . $content . $footer;
 <!--страница-->
 <div id="page" class="container-fluid">
 	<?=$content_page  ?>
+
+	<div class="content-callback">
+		<!-- Обратный звонок-->
+		<div id="call" class="call">
+			<div>
+				<div class="text" align="center">
+					<div id="blok_tel">
+						<h3>ЗАКАЗ ОБРАТНОГО ЗВОНКА</h3>
+						<input type="text" name="tel" placeholder="Номер телефона" required="required" class="inputbox">
+						<input type="submit" class="big-button" name="submit_tel">
+					</div>
+				</div>
+				<a href="#close" title="Закрыть">Закрыть</a>
+			</div>
+		</div>
+		<!-- end Обратный звонок-->
+	</div>
+
 </div>
 <!--end страница-->
 
@@ -276,7 +294,7 @@ $content_page = $content_page_head . $header . $menu . $content . $footer;
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="cancelAddBlocks();">×</button>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				<h4 class="modal-title">Добавить меню на страницу</h4>
 			</div>
 			<div class="modal-body">
@@ -287,7 +305,7 @@ $content_page = $content_page_head . $header . $menu . $content . $footer;
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal" onclick="cancelAddBlocks();">Отмена</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
 				<button type="button" class="btn btn-primary" onclick="addLinkMenu();">Добавить</button>
 			</div>
 		</div>
@@ -295,38 +313,12 @@ $content_page = $content_page_head . $header . $menu . $content . $footer;
 </div>
 <!-- end Модальное окно "Добавить пункт меню"-->
 
-<!-- Обратный звонок-->
-<div id="call" class="call">
-	<div>
-		<div class="text" align="center">
-			<div id="blok_tel">
-				<form action="" method="post" class="form1">
-					<h3> ЗАКАЗ ОБРАТНОГО ЗВОНКА</h3>
-					<input type="number" name="tel" placeholder="Номер телефона" required="required" class="inputbox" value="Номер телефона с кодом" onfocus = "(this.value == '0123456789') && (this.value = '')" onblur = "(this.value == '') && (this.value = '0123456789')">
-					<input type="submit" class="big-button" name="submit_tel">
-				</form>
-				<?if(isset($_POST["submit_tel"]))
-				{
-					$email = 'ваша_почта@yandex.com';
-					/* Отправляем email */
-					mail($email, "Заказ обратного звонка на сайте ...", "\nПосетитель заказал обратный звонок! \nТелефон : ".$_POST['tel']."");
-					echo 'Заявка принята!';
-				}
-				?>
-			</div>
-		</div>
-		<a href="#close" title="Закрыть">Закрыть</a>
-	</div>
-</div>
-<!-- end Обратный звонок-->
-
-
 <!-- Галерея слайдов-->
 <div id="slideImages" class="modal fade" style="padding-right: 19px;margin-left: -255px;">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="cancelAddBlocks();">×</button>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="cancelSelectImgToSlide();">×</button>
 				<h4 class="modal-title">Галерея изображений</h4>
 				<div class='block-upload'><div>Загрузка файлов для галереи</div><div id='uploadBtn' class='btn upload-btn'><span>Выбрать файл<span></div><span id='statusUpload'></span></div>
 			</div>
@@ -343,7 +335,7 @@ $content_page = $content_page_head . $header . $menu . $content . $footer;
 	</div>
 	<script>uploadImages('slider');</script>
 </div>
-<!-- endГалерея слайдов-->
+<!-- end Галерея слайдов-->
 
 
 

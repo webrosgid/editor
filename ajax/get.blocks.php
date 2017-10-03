@@ -38,7 +38,7 @@ foreach($jsn as $id)
 
 			if($row_type['name'] == 'map')
 			{
-				$row['html'] .= "<script>init_map('{$blockId}')</script><input type='hidden' id='set_{$blockId}' x='59.9386300' y='30.3141300' z='12'>";
+				$row['html'] .= "<script id='code_{$blockId}'>init_map('{$blockId}')</script><input type='hidden' id='set_{$blockId}' x='59.9386300' y='30.3141300' z='12'>";
 			}
 
 			if($row_type['name'] == 'slider')

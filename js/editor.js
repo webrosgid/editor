@@ -109,19 +109,6 @@ $(document).ready(function() {
 		}
 	});
 	/***************************************************/
-
-
-	/*Привязка якоря*/
-	var index = 'page_head';
-	var info = $('div[type=text_block]').attr('id');
-	var contact = $('div[type=callback]').attr('id');
-	var mas = [index, info, contact];
-	var i =0;
-	$('.menu-item').each(function() {
-		$(this).find('a').attr('href', '#'+mas[i]);
-		i++;
-	});
-	/******************/
 });
 
 //сохранить настройки блока
@@ -131,6 +118,7 @@ function saveSetting() {
 	switch(type){
 		case 'map': saveMapSetting(); break;
 		case 'slider': saveSettingSlide(); break;
+		case 'header': saveSettingHeader(); break;
 	}
 
 	closeSettingPanel();
@@ -202,6 +190,13 @@ function getImages(dir,idBlock) {
 	$.post('/editor/ajax/get.images.php', {idBlock : idBlock, dir : dir}, function(data) {
 		if(dir === 'slider'){
 			$('.images-slider').html(data);
+
+			//удаляем изображения которые уже используются в слайдере
+			$('.sliders-panel-slide').find('img').each(function() {
+				var src = $(this).attr('src');
+				$('.images-slider').find('div[img="'+src+'"]').remove();
+			});
+
 		}else {
 			$('.images-default').html(data);
 		}
@@ -525,6 +520,9 @@ function removeBlock(block){
 		$(selector).remove();
 	}
 	block.closest('.el').remove();
+	var id = getIdBlock(block);
+	$('#code_'+id).remove();
+	$('#set_'+id).remove();
 }
 
 //Определить последний ли блок данного типа на странице
@@ -627,7 +625,8 @@ function addLink(block) {
 function addLinkMenu() {
 
 	var bid=$('#idBlock').val();
-	$('div [type="menu"]').find('ul').append('<li class="menu-item move-item"><a href="#'+bid+'" data="menu">'+$('#textMenu').val()+'</a></li>');
+	var style = $('.menu-item').find('a').attr('style');
+	$('div [type="menu"]').find('ul').append('<li class="menu-item move-item"><a href="#'+bid+'" data="menu" style="'+style+'">'+$('#textMenu').val()+'</a></li>');
 	hideModal('#addModalMenu');
 }
 
@@ -696,6 +695,8 @@ function uploadImages(dir, idBlock) {
 						getImages('background', idBlock);
 					}else if(dir === 'slider'){
 						getImages('slider');
+					}else if(dir === 'logo'){
+						$('.set-logo').attr('src', '/editor/uploads/logo/'+file);
 					}
 
 					$('.block-upload').append('<div class="status-load">Файл загружен!</div>');
@@ -736,7 +737,7 @@ function savePage() {
 	var header = $('.content-header').html();
 	var footer = $('.content-footer').html();
 	var menu = $('.content-menu').html();
-	//var content = $('.content').html();
+	content += $('.content-callback').html();
 	var site = $('#site_url').val();
 	var id_page = $('#id_page').val();
 

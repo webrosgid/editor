@@ -34,3 +34,9 @@
 	bottom: 0;
 	right: 0;
 }
+
+.set-logo{
+	max-width: 200px;
+	max-height: 200px;
+	margin: 20px;
+}

@@ -13,14 +13,14 @@ for($i = 2; $i < count($images); $i++)
 
 	if($dir != 'slider')
 	{
-		$result .= "<div style='position: relative;'>
+		$result .= "<div class='img-one'>
 					<i onclick='deleteImage($(this)); return false;' class='fa fa-times del-back-img' aria-hidden='true' title='Удалить'></i>
 					<img class='back-img' data='$data' src='$src' onclick='setImageBackground(\"$src\", \"$idBlock\"); return false;'>
 				</div>";
 	}
 	else
 	{
-		$result .= "<div style='position: relative;'>
+		$result .= "<div class='img-one' img='$src'>
 					<i onclick='deleteImage($(this)); return false;' class='fa fa-times del-back-img' aria-hidden='true' title='Удалить'></i>
 					<img class='back-img' data='$data' src='$src' onclick='selectImageToSlide($(this));'>
 				</div>";

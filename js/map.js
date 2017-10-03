@@ -28,7 +28,7 @@ function init_map_setting() {
 			$(function() {init_gl();});
 			break;
 		default:
-			$('#radio_2g').prop('checked',true);
+			$('#radio_ya').prop('checked',true);
 			init_ya();
 			break;
 	}
@@ -80,7 +80,6 @@ function google_map(id) {
 		var y = $('#set_' + id).attr('y');
 		var z = $('#set_' + id).attr('z');
 
-		console.log(z);
 		var mapOptions = {
 			zoom: parseInt( z ),
 			center: new google.maps.LatLng(x, y),

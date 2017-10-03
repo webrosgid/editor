@@ -82,3 +82,7 @@
 	justify-content: center;
 	flex-wrap: wrap;
 }
+
+.add-slide-btn{
+	margin: 10px;
+}
