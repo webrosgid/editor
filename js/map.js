@@ -85,13 +85,26 @@ function google_map(id) {
 
 		var map = new google.maps.Map(document.getElementById(id), mapOptions);
 
-		var geocoder = new google.maps.Geocoder(map.getCenter());
-		console.log(geocoder);
+		var geocoder = new google.maps.Geocoder();
 
-		var marker = new google.maps.Marker({
+		// geocoder.geocode( { 'location': map.getCenter()}, function(results, status) {
+		//
+		// 	if (status == google.maps.GeocoderStatus.OK)
+		// 	{
+		// 		var marker = new google.maps.Marker({ // маркер
+		// 			position: results[0].geometry.location,
+		// 			map: map
+		// 		});
+		// 	}
+		// 	else
+		// 	{
+		// 		alert('Geocode was not successful for the following reason: ' + status);
+		// 	}
+		// });
+
+		var marker = new google.maps.Marker({ // маркер
 			position: map.getCenter(),
-			map: map,
-			///title: 'Текст марке'
+			map: map
 		});
 	});
 }

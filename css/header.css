@@ -1,15 +1,18 @@
-.logo{
+#logo{
 	margin: 0;
 	display: inline-block;
 	padding: 0 10px;
+	max-width: 20%;
+	min-width: 20%;
 }
 
 .header-text{
 	padding: 0 10px;
+	max-width: 50%;
+	min-width: 50%;
 }
 
 .header-column{
-	max-width: 81.498938em;
 	box-sizing: content-box;
 	display: flex;
 	justify-content: space-between;
@@ -17,9 +20,10 @@
 }
 
 .header-info{
-	min-width: 210px;
 	text-align: end;
 	padding: 0 10px;
+	max-width: 30%;
+	min-width: 30%;
 }
 
 .site-header {
